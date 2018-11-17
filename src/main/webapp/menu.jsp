@@ -26,7 +26,18 @@
             <label>Ton prénom : <input name="playerName"></label>
             <input name="action" value="connexion" type="SUBMIT">
         </form>
-        <p> ${numberConnected} joueurs connectés</p>
+
+
+        <c:if test="${not empty numberConnected}">
+            <p>${numberConnected} joueurs connectés</p>   
+        </c:if>
+        <c:if test="${empty numberConnected}">
+            <p> 0 joueurs connectés </p>   
+        </c:if>
+        <c:if test="${not empty highscore}">
+            <h3>RECORD A BATTRE : ${highscore} par ${recordman}</h3>   
+        </c:if>
+
     </body>
 </html>
 

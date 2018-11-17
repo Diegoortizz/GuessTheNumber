@@ -13,15 +13,19 @@
         <title>Devine un nombre</title>
     </head>
     <body>
-        
-        
-        <h1>Bravo ${playerName}, tu as gagné !</h1>
-        <form method="POST">
-            <input type="SUBMIT" name="action" value="deconnexion"/>
-            <input type="SUBMIT" name="action" value="rejouer"/>
-        </form>
 
-        <p> ${numberConnected} joueurs connectés</p>
 
-    </body>
+        <h1>Bravo ${playerName}, tu as gagné en ${nbtentatives} tentatives !</h1>
+        
+    <c:if test="${NewRecord}">
+        <h1>C'est un nouveau record! Félicitations!</h1>
+    </c:if>
+    <form method="POST">
+        <input type="SUBMIT" name="action" value="deconnexion"/>
+        <input type="SUBMIT" name="action" value="rejouer"/>
+    </form>
+
+    <p> ${numberConnected} joueurs connectés</p>
+
+</body>
 </html>

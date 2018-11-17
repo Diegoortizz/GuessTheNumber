@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.guessthenumber;
 
 import java.io.IOException;
@@ -13,28 +8,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Utilisateur
- */
 public class DevineLeNombre extends HttpServlet {
 
-//    SessionCounter sc = new SessionCounter();
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    /*
+    
+    TODO : 
+    - Utiliser des listners pour le nombre de personne connectés
+    
+    - Comment on pourrait résoudre le problème du raffraichissement de la page 
+    qui met à jour le compteurs de nb de tentatives et aussi qu'il mémorise la 
+    dernière action qui à été effectué.
+    
+    */
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
 
         if (action != null) {
+            Object nbjoueurs = request.getServletContext().getAttribute("numberConnected");
+            if (nbjoueurs == null) {
+                request.getServletContext().setAttribute("numberConnected", 0);
+                System.out.println((int) request.getServletContext().getAttribute("numberConnected"));
+            }
+
             switch (action) {
                 case "connexion":
                     String pseudo = request.getParameter("playerName");
@@ -43,6 +42,8 @@ public class DevineLeNombre extends HttpServlet {
                         session.setAttribute("playerName", pseudo);
                         session.setAttribute("nbtentatives", 1);
                         request.getSession(true).setAttribute("answer", new Random().nextInt(101));
+                        int nc = 1 + (int) request.getServletContext().getAttribute("numberConnected");
+                        request.getServletContext().setAttribute("numberConnected", nc);
                         request.getRequestDispatcher("jeu.jsp").forward(request, response);
                         System.out.println("connexion");
                     }
@@ -71,12 +72,23 @@ public class DevineLeNombre extends HttpServlet {
                             request.getRequestDispatcher("jeu.jsp").forward(request, response);
 
                         } else {
+                            Object highscore = request.getServletContext().getAttribute("highscore");
                             message += "Bravo tu as gagné ! ";
                             request.setAttribute("message", message);
+
+                            if (highscore == null || ((int) highscore < nbtentatives)) {
+                                request.setAttribute("NewRecord", true);
+                                request.getServletContext().setAttribute("highscore", nbtentatives);
+                                request.getServletContext().setAttribute("recordman", (String) request.getSession().getAttribute("playerName"));
+
+                            } else {
+                                request.setAttribute("newRecord", false);
+                            }
+
                             request.getRequestDispatcher("winpage.jsp").forward(request, response);
                         }
                     }
-//                    request.getSession(true).setAttribute("guess", ""); // comment faire en sorte de remmetre guess à 0 ?
+//                    request.getSession(true).setAttribute("guess", ""); // comment faire en sorte de remetre guess à 0 ? remettre déconnexion à "" ?
 //                    request.setAttribute("guess", "");
 //                    request.getSession().removeAttribute("guess");
 //                    String guess2 = request.getParameter("guess");
@@ -84,6 +96,10 @@ public class DevineLeNombre extends HttpServlet {
 
                     break;
                 case "deconnexion":
+
+                    int nc = -1 + (int) getServletContext().getAttribute("numberConnected");
+                    getServletContext().setAttribute("numberConnected", nc);
+
                     request.getSession(true).invalidate();
                     request.getRequestDispatcher("menu.jsp").forward(request, response);
                     System.out.println("déconnexion");

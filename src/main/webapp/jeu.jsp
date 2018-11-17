@@ -5,13 +5,20 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="stlye_jeu.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
         <title>Devine un nombre</title>
     </head>
 
@@ -34,9 +41,13 @@
             </form>
         </div>
 
-        
+
+        <c:if test="${not empty highscore}">
+            <p>RECORD A BATTRE : ${highscore} par ${recordman}</p>   
+        </c:if>
+
         <div id="p1">
-            <p> Tentative n° ${nbtentatives} <br> ${message} </p>
+            <p> Tentative n° ${nbtentatives} <br> ${message} <br> </p>
         </div>
 
 
