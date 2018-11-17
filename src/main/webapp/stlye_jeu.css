@@ -1,0 +1,52 @@
+body, html {
+    background-color: #22223b;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+form {
+    font-size: 25px;
+    color: #c9ada7;
+
+}
+#div1 {
+    position: absolute;
+    width: 100%;
+    bottom: 65%;
+}
+
+#div2 {
+    position: absolute;
+    width: 100%;
+    bottom: 55%;
+}
+
+
+p {
+    font-size: 15px;
+    color : #f2e9e4;
+}
+
+#p1{
+    position:absolute;
+    width:99%;
+    bottom:70%;
+}
+
+#p2{
+    position:absolute;
+    width:99%;
+    bottom:10%;
+}
+
+#p3{
+    position:absolute;
+    width:99%;
+    bottom:0%;
+}
+
+h1{
+    font-size: 35px;
+    color:  #f2e9e4 ;
+}

@@ -12,19 +12,21 @@
 
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="stlye_menu.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Devine un nombre</title>
     </head>
     <body>
-        <h1>Bienvenue dans notre jeu !</h1>
-        <hr>
-        <h2>${cpt_joueurs_co} joueurs connectés</h2>
-        <hr>
 
+        <div>
+            <h1 id="header">BIENVENUE DANS NOTRE JEU !</h1>
+        </div>
         <form method="POST">
             <label>Ton prénom : <input name="playerName"></label>
             <input name="action" value="connexion" type="SUBMIT">
         </form>
+        <p> ${numberConnected} joueurs connectés</p>
     </body>
 </html>
 

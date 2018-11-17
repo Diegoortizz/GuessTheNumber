@@ -6,9 +6,7 @@
 package com.mycompany.guessthenumber;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 public class DevineLeNombre extends HttpServlet {
 
+//    SessionCounter sc = new SessionCounter();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,59 +32,73 @@ public class DevineLeNombre extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ServletContext app = this.getServletContext();
-        HttpSession session = request.getSession();
         String action = request.getParameter("action");
 
         if (action != null) {
-            System.out.println("--------------" + action + "--------------");
             switch (action) {
                 case "connexion":
                     String pseudo = request.getParameter("playerName");
-                    if (null != pseudo && !pseudo.equals(" ")) {
-                        session.setAttribute("savedusername", pseudo);
+                    if (null != pseudo && !pseudo.equals("")) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("playerName", pseudo);
                         session.setAttribute("nbtentatives", 1);
-                        System.out.println(action + " " + pseudo);
                         request.getSession(true).setAttribute("answer", new Random().nextInt(101));
                         request.getRequestDispatcher("jeu.jsp").forward(request, response);
+                        System.out.println("connexion");
                     }
                     break;
                 case "deviner":
                     String guess = request.getParameter("guess");
-                    int toguess = (int) session.getAttribute("answer");
                     int nbuser = Integer.parseInt(guess);
-                    int nbtentatives = (int) session.getAttribute("nbtentatives");
+
+                    int answer = (int) request.getSession().getAttribute("answer");
+                    int nbtentatives = (int) request.getSession().getAttribute("nbtentatives");
+
                     String message = "";
-                    if (toguess > nbuser) {
-                        message += "plus haut";
-                        session.setAttribute("message", message);
-                        session.setAttribute("nbtentatives", nbtentatives + 1);
-                        request.getRequestDispatcher("jeu.jsp").forward(request, response);
-                    } else if (toguess < nbuser) {
-                        message += "plus bas";
-                        session.setAttribute("message", message);
-                        session.setAttribute("nbtentatives", nbtentatives + 1);
-                        request.getRequestDispatcher("jeu.jsp").forward(request, response);
-                    } else {
-                        message += "Bravo tu as gagné ! ";
-                        session.setAttribute("message", message);
-                        request.getRequestDispatcher("winpage.jsp").forward(request, response);
+
+                    System.out.println("before " + guess);
+
+                    if (!guess.equals("")) {
+                        if (answer > nbuser) {
+                            message += "plus haut";
+                            request.setAttribute("message", message);
+                            request.getSession(true).setAttribute("nbtentatives", nbtentatives + 1);
+                            request.getRequestDispatcher("jeu.jsp").forward(request, response);
+                        } else if (answer < nbuser) {
+                            message += "plus bas";
+                            request.setAttribute("message", message);
+                            request.getSession(true).setAttribute("nbtentatives", nbtentatives + 1);
+                            request.getRequestDispatcher("jeu.jsp").forward(request, response);
+
+                        } else {
+                            message += "Bravo tu as gagné ! ";
+                            request.setAttribute("message", message);
+                            request.getRequestDispatcher("winpage.jsp").forward(request, response);
+                        }
                     }
+//                    request.getSession(true).setAttribute("guess", ""); // comment faire en sorte de remmetre guess à 0 ?
+//                    request.setAttribute("guess", "");
+//                    request.getSession().removeAttribute("guess");
+//                    String guess2 = request.getParameter("guess");
+//                    System.out.println("after " + guess2);
+
                     break;
                 case "deconnexion":
-                    session.invalidate();
+                    request.getSession(true).invalidate();
                     request.getRequestDispatcher("menu.jsp").forward(request, response);
+                    System.out.println("déconnexion");
                     break;
                 case "rejouer":
-                    // que faire ?
-                    break;
-                default:
+                    request.getSession().setAttribute("nbtentatives", 1);
+                    request.getSession().setAttribute("message", "");
+                    request.getSession(true).setAttribute("answer", new Random().nextInt(101));
+                    request.getRequestDispatcher("jeu.jsp").forward(request, response);
                     break;
             }
         } else {
             request.getRequestDispatcher("menu.jsp").forward(request, response);
-
         }
+        System.out.println("---------------------------------------------------------------");
 
     }
 

@@ -8,18 +8,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="stlye_menu.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Devine un nombre</title>
     </head>
     <body>
-        <hr>
-        <h2> joueurs connectés</h2>
-        <hr>
-
-        <h3>Bravo, tu as gagné !</h3>
+        
+        
+        <h1>Bravo ${playerName}, tu as gagné !</h1>
         <form method="POST">
             <input type="SUBMIT" name="action" value="deconnexion"/>
             <input type="SUBMIT" name="action" value="rejouer"/>
         </form>
+
+        <p> ${numberConnected} joueurs connectés</p>
+
     </body>
 </html>

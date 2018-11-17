@@ -1,0 +1,31 @@
+body, html {
+    background-color: #22223b;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+form {
+    font-size: 25px;
+    color: #c9ada7;
+    position: absolute;
+    width: 100%;
+    bottom: 65%;
+}
+
+
+p {
+    font-size: 15px;
+    color : #f2e9e4;
+    position:absolute;
+    width:99%;
+    bottom:0;
+}
+
+h1{
+    font-size: 60px;
+    color:  #f2e9e4 ;
+    border: 5px solid #fff;
+    -moz-box-shadow: 8px 8px 12px #aaa; 
+    -webkit-box-shadow: 8px 8px 12px #aaa; 
+    box-shadow: 8px 8px 12px #555; 
+}

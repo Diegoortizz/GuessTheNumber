@@ -9,28 +9,45 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="stlye_jeu.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Devine un nombre</title>
     </head>
+
     <body onload="document.guessForm.guess.focus()">
-        <hr>
-        <h2>${nbPlayers} joueurs connectés</h2>
-        <hr>
 
-        <h3>Hello ${playerName}, Devine mon nombre</h3>
-        <h4> réponse -> ${answer}</h4>
-        <h4> ${message}</h4>
-        <h3> Tentative n° ${nbtentatives} </h3>
-        <h2>Je pense à un nombre compris entre 0 et 100</h2>
-        <form name="guessForm" method="POST" accept-charset="UTF-8" >
-            <label>Ta proposition : <input type="number" min="0" max="100" required name="guess"></label> 
-            <input type="SUBMIT" name="action" value="deviner"><br/>
-        </form>
-        <form method="POST">
-            <input type="SUBMIT" name="action" value="deconnexion">
-        </form>
 
-        <hr>
+        <h1>Salut ${playerName}, tu dois deviner mon nombre !</h1>
+        <br>
+        <h1>Je pense à un nombre compris entre 0 et 100 ...</h1>
+
+        <div id="div1">
+            <form name="guessForm" method="POST" accept-charset="UTF-8" >
+                <label>Votre proposition <input type="number" min="0" max="100" required name="guess"></label> 
+                <input type="SUBMIT" name="action" value="deviner"><br/>
+            </form>
+        </div>
+        <div id="div2">
+            <form method="POST">
+                <input type="SUBMIT" name="action" value="deconnexion">
+            </form>
+        </div>
+
+        
+        <div id="p1">
+            <p> Tentative n° ${nbtentatives} <br> ${message} </p>
+        </div>
+
+
+        <div id="p2">
+            <p> réponse -> ${answer}</p>
+        </div>
+
+
+        <div id="p3">
+            <p> ${numberConnected} joueurs connectés</p>
+        </div>
 
 
 
