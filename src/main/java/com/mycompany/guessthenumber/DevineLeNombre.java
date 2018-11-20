@@ -19,21 +19,13 @@ public class DevineLeNombre extends HttpServlet {
     qui met à jour le compteurs de nb de tentatives et aussi qu'il mémorise la 
     dernière action qui à été effectué.
     
-    */
-    
-    
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        System.out.println("");
         String action = request.getParameter("action");
-
+        System.out.println("action ->" + " " + action);
         if (action != null) {
-            Object nbjoueurs = request.getServletContext().getAttribute("numberConnected");
-            if (nbjoueurs == null) {
-                request.getServletContext().setAttribute("numberConnected", 0);
-                System.out.println((int) request.getServletContext().getAttribute("numberConnected"));
-            }
-
             switch (action) {
                 case "connexion":
                     String pseudo = request.getParameter("playerName");
@@ -42,8 +34,8 @@ public class DevineLeNombre extends HttpServlet {
                         session.setAttribute("playerName", pseudo);
                         session.setAttribute("nbtentatives", 1);
                         request.getSession(true).setAttribute("answer", new Random().nextInt(101));
-                        int nc = 1 + (int) request.getServletContext().getAttribute("numberConnected");
-                        request.getServletContext().setAttribute("numberConnected", nc);
+//                        int nc = 1 + (int) request.getServletContext().getAttribute("numberConnected");
+//                        request.getServletContext().setAttribute("numberConnected", nc);
                         request.getRequestDispatcher("jeu.jsp").forward(request, response);
                         System.out.println("connexion");
                     }
@@ -56,7 +48,6 @@ public class DevineLeNombre extends HttpServlet {
                     int nbtentatives = (int) request.getSession().getAttribute("nbtentatives");
 
                     String message = "";
-
                     System.out.println("before " + guess);
 
                     if (!guess.equals("")) {
@@ -80,7 +71,6 @@ public class DevineLeNombre extends HttpServlet {
                                 request.setAttribute("NewRecord", true);
                                 request.getServletContext().setAttribute("highscore", nbtentatives);
                                 request.getServletContext().setAttribute("recordman", (String) request.getSession().getAttribute("playerName"));
-
                             } else {
                                 request.setAttribute("newRecord", false);
                             }
@@ -97,9 +87,8 @@ public class DevineLeNombre extends HttpServlet {
                     break;
                 case "deconnexion":
 
-                    int nc = -1 + (int) getServletContext().getAttribute("numberConnected");
-                    getServletContext().setAttribute("numberConnected", nc);
-
+//                    int nc = -1 + (int) getServletContext().getAttribute("numberConnected");
+//                    getServletContext().setAttribute("numberConnected", nc);
                     request.getSession(true).invalidate();
                     request.getRequestDispatcher("menu.jsp").forward(request, response);
                     System.out.println("déconnexion");

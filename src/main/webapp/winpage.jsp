@@ -16,9 +16,9 @@
 
 
         <h1>Bravo ${playerName}, tu as gagné en ${nbtentatives} tentatives !</h1>
-        
+
     <c:if test="${NewRecord}">
-        <h1>C'est un nouveau record! Félicitations!</h1>
+        <h1 class="classwin"> C'est un nouveau record! Félicitations! </h1>
     </c:if>
     <form method="POST">
         <input type="SUBMIT" name="action" value="deconnexion"/>
